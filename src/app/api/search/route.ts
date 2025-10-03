@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 
-export const runtime = 'edge';
-
 // GET /api/search - Search posts by query
 export async function GET(request: NextRequest) {
   try {
@@ -16,8 +14,11 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // In development, return mock search results
-    if (process.env.NODE_ENV === 'development') {
+    const env = process.env as unknown as CloudflareEnv;
+    
+    // Check if we have D1 database available
+    if (!env.DB) {
+      // Return mock search results if database isn't available
       const mockResults = [
         {
           id: 1,
@@ -36,14 +37,6 @@ export async function GET(request: NextRequest) {
       );
       
       return NextResponse.json({ posts: mockResults, query });
-    }
-
-    const env = process.env as any as CloudflareEnv;
-    if (!env.DB) {
-      return NextResponse.json(
-        { error: 'Database not available' },
-        { status: 503 }
-      );
     }
 
     const db = getDatabase(env);

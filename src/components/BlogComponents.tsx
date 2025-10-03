@@ -90,9 +90,8 @@ export function CreatePostForm({ onPostCreated }: { onPostCreated?: () => void }
         const errorData = await response.json() as { error: string };
         setMessage(`Error: ${errorData.error}`);
       }
-    } catch (error) {
-      setMessage('Failed to create post');
     } finally {
+      setIsSubmitting(false);
       setIsSubmitting(false);
     }
   };

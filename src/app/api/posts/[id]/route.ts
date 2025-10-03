@@ -1,16 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDatabase } from '@/lib/database';
 
-export const runtime = 'edge';
-
 // GET /api/posts/[id] - Get a specific post
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const resolvedParams = await params;
-    const env = process.env as any as CloudflareEnv;
+    const env = process.env as unknown as CloudflareEnv;
     const db = getDatabase(env);
     
     const id = parseInt(resolvedParams.id);
@@ -47,7 +45,7 @@ export async function PUT(
 ) {
   try {
     const resolvedParams = await params;
-    const env = process.env as any as CloudflareEnv;
+    const env = process.env as unknown as CloudflareEnv;
     const db = getDatabase(env);
     
     const id = parseInt(resolvedParams.id);
@@ -86,12 +84,12 @@ export async function PUT(
 
 // DELETE /api/posts/[id] - Delete a specific post
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const resolvedParams = await params;
-    const env = process.env as any as CloudflareEnv;
+    const env = process.env as unknown as CloudflareEnv;
     const db = getDatabase(env);
     
     const id = parseInt(resolvedParams.id);
