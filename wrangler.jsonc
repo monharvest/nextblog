@@ -14,5 +14,12 @@
   "observability": {
     "enabled": true
   },
-  "upload_source_maps": true
+  "upload_source_maps": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blog-db",
+      "database_id": "fed461dc-20ec-4aa9-a911-a4d88b3fa6e9"
+    }
+  ]
 }
